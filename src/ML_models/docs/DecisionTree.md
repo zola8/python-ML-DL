@@ -17,4 +17,4 @@ When to avoid:
 - Risk of Overfitting
 - Continuous Linear Relationships: If your data follows a smooth, linear progression (e.g., standard linear price changes), linear regression models often perform much better and are less prone to overfitting
 
-![decision_tree.png](decision_tree.png)
+![decision_tree.png](img/decision_tree.png)
