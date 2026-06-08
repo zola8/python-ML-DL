@@ -1,4 +1,4 @@
-# Decision tree
+# Decision Tree
 
 Decision trees are ideal when you need a model that is **highly interpretable**, 
 requires minimal data preparation, and can handle both **numerical** and **categorical** data.
@@ -17,3 +17,4 @@ When to avoid:
 - Risk of Overfitting
 - Continuous Linear Relationships: If your data follows a smooth, linear progression (e.g., standard linear price changes), linear regression models often perform much better and are less prone to overfitting
 
+![decision_tree.png](decision_tree.png)
