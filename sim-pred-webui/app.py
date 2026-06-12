@@ -8,11 +8,9 @@ from step03 import build_step_03
 from step04 import build_step_04
 from step05 import build_step_05
 
-
-# Initialize the main Gradio Blocks interface
 with gr.Blocks(title="Sim-Pred data science workflow (by Zoltan)") as app:
-    gr.Markdown("# Data Science Workflow App")
-    gr.Markdown("A modular, 5-step pipeline for your data science/predictions tasks.")
+    gr.Markdown("# Data Science Workflow App (by Zoltan)")
+    gr.Markdown("A modular, multistep pipeline for your data science/predictions tasks.")
 
     with gr.Walkthrough(selected=1) as walkthrough:
         with gr.Step("Data Source", id=1):
@@ -29,7 +27,6 @@ with gr.Blocks(title="Sim-Pred data science workflow (by Zoltan)") as app:
 
         with gr.Step("Evaluation", id=5):
             build_step_05()
-
 
 if __name__ == "__main__":
     print('Running on local URL:  http://127.0.0.1:7860')

@@ -27,21 +27,21 @@ def get_navigation_status(df):
     """
     if df is None or df.empty:
         return (
-            gr.Button(interactive=False, value="Load Data in Step 1 First"),
-            gr.Button(interactive=False, value="No Data Loaded")
+            gr.Button(interactive=False, value="Load data in Step 1 first"),
+            gr.Button(interactive=False, value="No data loaded")
         )
 
     col_count = len(df.columns)
 
     if col_count < 2:
         return (
-            gr.Button(interactive=False, value=f"Need ≥2 Columns (Current: {col_count})"),
-            gr.Button(interactive=False, value=f"Need ≥2 Columns (Current: {col_count})")
+            gr.Button(interactive=False, value=f"Need ≥2 columns (Current: {col_count})"),
+            gr.Button(interactive=False, value=f"Need ≥2 columns (Current: {col_count})")
         )
 
     return (
-        gr.Button(interactive=True, value="Proceed to Preprocessing ➡️"),
-        gr.Button(interactive=True, value="Apply Drop")
+        gr.Button(interactive=True, value="Proceed to preprocessing ➡️"),
+        gr.Button(interactive=True, value="Apply drop")
     )
 
 
@@ -63,7 +63,7 @@ def drop_selected_columns(df, columns_to_drop):
 
     try:
         df_cleaned = df.drop(columns=valid_columns_to_drop)
-        gr.Info(f"✅ Dropped {len(valid_columns_to_drop)} column(s): {', '.join(valid_columns_to_drop)}")
+        gr.Info(f"Dropped {len(valid_columns_to_drop)} column(s): {', '.join(valid_columns_to_drop)}")
 
         nav_next, nav_drop = get_navigation_status(df_cleaned)
         return df_cleaned, df_cleaned.head(), nav_next, nav_drop, []
@@ -75,7 +75,7 @@ def drop_selected_columns(df, columns_to_drop):
 
 def build_step_02(df_state, walkthrough):
     with gr.Column():
-        gr.Markdown("### Step 2: Data Preview")
+        gr.Markdown("# Step 2: Data Preview & Select Columns")
         gr.Markdown("Verify that your data has been loaded correctly. Drop unnecessary columns here too.")
 
         data_table = gr.Dataframe(label="Dataset Preview", interactive=False)

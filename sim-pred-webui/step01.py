@@ -2,6 +2,7 @@
 
 import gradio as gr
 import pandas as pd
+
 from datasets import get_sample_dataset, get_dataset_names
 
 
@@ -43,23 +44,20 @@ def build_step_01(walkthrough):
     with gr.Column():
         gr.Markdown("# Step 1: Select Data Source")
 
-        # Side-by-side layout for the two options
         with gr.Row(equal_height=True):
-            # Option A: File Upload
             with gr.Column():
-                gr.Markdown("### 📁 Option 1: Upload File")
+                gr.Markdown("### 📁 Option 1: Upload file")
                 file_input = gr.File(
-                    label="Upload CSV File",
+                    label="Upload CSV file",
                     file_types=[".csv"],
                     type="filepath"
                 )
 
-            # Option B: Sample Dataset Dropdown
             with gr.Column():
-                gr.Markdown("### 🎲 Option 2: Generate Sample")
+                gr.Markdown("### 🎲 Option 2: Generate or fetch sample")
                 sample_dropdown = gr.Dropdown(
                     choices=get_dataset_names(),
-                    label="Select a Sample Dataset",
+                    label="Select a sample dataset",
                     value=None,
                     allow_custom_value=False
                 )
