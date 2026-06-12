@@ -2,32 +2,68 @@
 
 import gradio as gr
 import pandas as pd
+from datasets import get_sample_dataset, get_dataset_names
 
 
-def process_upload_and_advance(file):
-    if file is None:
-        gr.Warning("⚠️ No file selected. Please upload a CSV file.")
+def process_upload_and_advance(file, sample_dataset):
+    df = None
+
+    # Priority 1: User uploaded a file
+    if file is not None:
+        try:
+            df = pd.read_csv(file)
+            gr.Info("File loaded successfully.")
+        except Exception as e:
+            gr.Warning(f"❌ Failed to read CSV file. Details: {str(e)}")
+            return None, gr.Walkthrough(selected=1)
+
+    # Priority 2: User selected a sample dataset
+    elif sample_dataset:
+        try:
+            df = get_sample_dataset(sample_dataset)
+            if df is not None:
+                gr.Info(f"Sample dataset '{sample_dataset}' loaded...")
+            else:
+                raise ValueError("Unknown sample dataset selected.")
+        except Exception as e:
+            gr.Warning(f"❌ Failed to generate sample data. Details: {str(e)}")
+            return None, gr.Walkthrough(selected=1)
+
+    # Priority 3: Neither was provided
+    else:
+        gr.Warning("No data source selected. Please upload a file or choose a sample.")
         return None, gr.Walkthrough(selected=1)
 
-    try:
-        df = pd.read_csv(file)
-        gr.Info("✅ Data loaded successfully! Moving to Preview...")
-
-        return df, gr.Walkthrough(selected=2)
-
-    except Exception as e:
-        gr.Warning(f"❌ Failed to read CSV. Details: {str(e)}")
-        return None, gr.Walkthrough(selected=1)
+    return df, gr.Walkthrough(selected=2)
 
 
 def build_step_01(walkthrough):
     df_state = gr.State()
 
     with gr.Column():
-        gr.Markdown("### 📂 Step 1: Select Data Source")
-        gr.Markdown("Upload your dataset to begin the workflow.")
+        gr.Markdown("# Step 1: Select Data Source")
 
-        file_input = gr.File(label="Upload CSV File", file_types=[".csv"], type="filepath")
+        # Side-by-side layout for the two options
+        with gr.Row(equal_height=True):
+            # Option A: File Upload
+            with gr.Column():
+                gr.Markdown("### 📁 Option 1: Upload File")
+                file_input = gr.File(
+                    label="Upload CSV File",
+                    file_types=[".csv"],
+                    type="filepath"
+                )
+
+            # Option B: Sample Dataset Dropdown
+            with gr.Column():
+                gr.Markdown("### 🎲 Option 2: Generate Sample")
+                sample_dropdown = gr.Dropdown(
+                    choices=get_dataset_names(),
+                    label="Select a Sample Dataset",
+                    value=None,
+                    allow_custom_value=False
+                )
+
         with gr.Row():
             with gr.Column(scale=2):
                 pass
@@ -38,7 +74,7 @@ def build_step_01(walkthrough):
 
     load_btn.click(
         fn=process_upload_and_advance,
-        inputs=[file_input],
+        inputs=[file_input, sample_dropdown],
         outputs=[df_state, walkthrough]
     )
 

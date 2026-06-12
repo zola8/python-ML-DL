@@ -39,5 +39,5 @@ if __name__ == "__main__":
         css="footer {visibility: hidden}",
         theme=gr.themes.Glass(),
         show_error=True,
-        share=True
+        # share=True
     )
