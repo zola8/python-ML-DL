@@ -3,6 +3,7 @@ import gradio as gr
 from app_commons import css, WELCOME
 from linear_regression_01 import example01
 from linear_regression_02 import example02
+from wordcloud_examples import wordcloud_example
 
 
 def submenu_linear_regression():
@@ -43,6 +44,8 @@ def main_menu():
             menu_regression()
         with gr.Tab("Classification"):
             menu_classification()
+        with gr.Tab("Wordcloud"):
+            wordcloud_example()
 
 
 with gr.Blocks(title="Sim-Pred") as app:
