@@ -22,9 +22,10 @@ DESCRIPTION = """
 ***Description:*** This is a simple example of linear regression with one single feature. 
 
 Key points:
-- Without standardization
-- With visualization
-- With test
+- Linear Regression prediction
+- Visualization
+- Metrics calculation
+- Interactive test
 
 This is a linear regression model to predict how many studying hours are needed to reach the required exam score.
 """

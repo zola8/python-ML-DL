@@ -2,14 +2,15 @@ import gradio as gr
 
 from app_commons import css, WELCOME
 from linear_regression_01 import example01
+from linear_regression_02 import example02
 
 
 def submenu_linear_regression():
     with gr.Tabs():
         with gr.Tab("Study Hours example"):
             example01()
-        with gr.Tab("Random example 2"):
-            gr.Markdown("a")
+        with gr.Tab("California Housing"):
+            example02()
 
 
 def menu_regression():
@@ -49,6 +50,7 @@ with gr.Blocks(title="Sim-Pred") as app:
     main_menu()
 
 if __name__ == '__main__':
+    print("Local URL: http://localhost:7860")
     app.queue()
     app.launch(
         css=css,
