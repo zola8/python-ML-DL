@@ -85,6 +85,7 @@ def example03():
     model7.fit(X_train, y_train)
     model7.predict(X_test)
 
+    # 4
     fig, ax = plt.subplots(dpi=150, figsize=(20, 10))
     tree_to_plot = model7.estimators_[0]
     plot_tree(tree_to_plot, feature_names=df.columns.tolist(), filled=True, rounded=True, fontsize=10)
