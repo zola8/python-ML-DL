@@ -50,8 +50,8 @@ def main_menu():
             menu_regression()
         with gr.Tab("Classification"):
             menu_classification()
-        with gr.Tab("Wordcloud"):
-            wordcloud_example()
+        # with gr.Tab("Wordcloud"):
+        #     wordcloud_example()
 
 
 with gr.Blocks(title="Sim-Pred") as app:
