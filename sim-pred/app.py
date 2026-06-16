@@ -4,7 +4,7 @@ from app_commons import css, WELCOME
 from linear_regression_01 import example01
 from linear_regression_02 import example02
 from wordcloud_examples import wordcloud_example
-
+from random_forest_regression import example03
 
 def submenu_linear_regression():
     with gr.Tabs():
@@ -14,14 +14,18 @@ def submenu_linear_regression():
             example02()
 
 
+def submenu_randomforest_regression():
+    with gr.Tabs():
+        with gr.Tab("Housing Prices example"):
+            example03()
+
+
 def menu_regression():
     with gr.Tabs():
         with gr.Tab("Linear Regression"):
             submenu_linear_regression()
-        with gr.Tab("Decision Tree"):
-            gr.Markdown("a")
         with gr.Tab("Random Forest"):
-            gr.Markdown("a")
+            submenu_randomforest_regression()
         with gr.Tab("K-Nearest Neighbours"):
             gr.Markdown("a")
         with gr.Tab("Support Vector Machine"):
