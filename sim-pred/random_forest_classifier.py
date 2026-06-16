@@ -2,7 +2,7 @@ import gradio as gr
 
 
 DESCRIPTION = """
-***Description:*** Linear regression example with multiple features. 
+***Description:*** ... 
 
 Key points:
 - aaa
@@ -11,5 +11,5 @@ Key points:
 
 def example_rfc01():
     # header
-    gr.Markdown("## <u>California Housing with Linear Regression</u>", elem_classes="tight_layout")
+    gr.Markdown("## <u>...</u>", elem_classes="tight_layout")
     gr.Markdown(DESCRIPTION, elem_classes="tight_next")
