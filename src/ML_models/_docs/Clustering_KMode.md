@@ -9,3 +9,8 @@ are. For example:
 
 Here there are 2 mismatches (color and shape) so these two are not very similar.
 
+### Use K-Modes
+
+When to use:
+- Your dataset contains categorical variables like gender, color, brand etc.
+- You're analyzing survey responses Yes/No, Male/Female etc.
