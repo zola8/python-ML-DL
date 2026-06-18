@@ -28,13 +28,3 @@ Some of the most common metrics include:
 - F1-score
 - ROC-AUC Curve
 
-### Confusion Matrix
-
-- True Positive (TP): The model correctly predicted a positive outcome i.e the actual outcome was positive.
-- True Negative (TN): The model correctly predicted a negative outcome i.e the actual outcome was negative.
-- False Positive (FP): The model incorrectly predicted a positive outcome i.e the actual outcome was negative. It is also known as a Type I error.
-- False Negative (FN): The model incorrectly predicted a negative outcome i.e the actual outcome was positive. It is also known as a Type II error.
-
-https://www.geeksforgeeks.org/machine-learning/confusion-matrix-machine-learning/
-
-![confusion_matrix.png](img/confusion_matrix.png)
