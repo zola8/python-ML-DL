@@ -1,12 +1,50 @@
 import cv2
 import gradio as gr
 import numpy as np
+from PIL import Image
+
 
 css = """
     footer {visibility: hidden}
     .tight_layout {margin: 1em 0}
     .tight_next {margin-bottom: 1.5em}
 """
+
+
+def detect_yellow(output):
+    # 1. Convert to HSV
+    hsv = cv2.cvtColor(output, cv2.COLOR_RGB2HSV)
+
+    # 2. Create the mask
+    lower_yellow = np.array([20, 50, 50])
+    upper_yellow = np.array([30, 255, 255])
+    mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
+
+    # 3. Noise Reduction (Morphological Operations)
+    # Erosion removes small white noise spots
+    kernel = np.ones((5, 5), np.uint8)
+    mask = cv2.erode(mask, kernel, iterations=1)
+    # Dilation restores the size of the remaining objects
+    mask = cv2.dilate(mask, kernel, iterations=2)
+
+    # 4. Find Contours
+    # RETR_EXTERNAL gets only the extreme outer contours
+    # CHAIN_APPROX_SIMPLE compresses horizontal, vertical, and diagonal segments
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    # 5. Process each contour
+    for cnt in contours:
+        area = cv2.contourArea(cnt)
+        # Filter out small noise (adjust 500 based on your camera resolution)
+        if area > 500:
+            x, y, w, h = cv2.boundingRect(cnt)
+            # Draw a green rectangle around the detected object
+            cv2.rectangle(output, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            # Optional: Add a label
+            cv2.putText(output, "Yellow", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+    return output
 
 
 def process_frame(frame, filter_type):
@@ -59,6 +97,9 @@ def process_frame(frame, filter_type):
         return cv2.GaussianBlur(output, (21, 21), 0)
     elif filter_type == "Invert Colors":
         return 255 - output
+    elif filter_type == "Yellow Object":
+        return detect_yellow(output)
+
     else:
         return output
 
@@ -70,7 +111,8 @@ filter_options = [
     "Red Filter",
     "Edge Detection",
     "Gaussian Blur",
-    "Invert Colors"
+    "Invert Colors",
+    "Yellow Object",
 ]
 
 # Create the Gradio Interface
