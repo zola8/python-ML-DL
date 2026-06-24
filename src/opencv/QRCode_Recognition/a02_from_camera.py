@@ -5,7 +5,7 @@ from pyzbar.pyzbar import decode
 cap = cv2.VideoCapture(0)
 
 
-while (True):
+while True:
     ret, frame = cap.read()
 
     qr_info = decode(frame)
