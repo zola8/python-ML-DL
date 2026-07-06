@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.13"
 dependencies = [
+    "drawdata>=0.5.1",
     "gradio>=6.17.3",
     "kmodes>=0.12.2",
     "matplotlib>=3.10.9",
