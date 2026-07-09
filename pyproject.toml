@@ -19,6 +19,7 @@ dependencies = [
     "pyzbar>=0.1.9",
     "scikit-learn>=1.9.0",
     "seaborn>=0.13.2",
+    "sqlalchemy>=2.0.51",
     "streamlit>=1.58.0",
     "ultralytics>=8.4.77",
     "wordcloud>=1.9.6",
