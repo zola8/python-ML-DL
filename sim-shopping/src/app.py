@@ -1,6 +1,9 @@
 import gradio as gr
+from gradio import WebcamOptions
 
 from shopping_cart import add_item, remove_item, clear_cart
+from vision import process_frame
+
 
 css = """
     footer {visibility: hidden}
@@ -13,6 +16,7 @@ with gr.Blocks(title="Sim-Shopping") as demo:
     gr.Markdown("# --- Shopping Cart & Vision Station ---")
 
     with gr.Row(equal_height=False):
+
         # LEFT COLUMN: Shopping Cart
         with gr.Column(scale=1):
             gr.Markdown("### Shopping List")
@@ -40,19 +44,22 @@ with gr.Blocks(title="Sim-Shopping") as demo:
             clear_btn = gr.Button("🗑️ Clear All", variant="stop")
 
         # RIGHT COLUMN: Camera & Vision
-        with gr.Column(scale=1):
-            gr.Markdown("### Camera & Vision")
+        with gr.Column(scale=2):
+            gr.Markdown("### Live Detection")
+
             camera_feed = gr.Image(
                 sources=["webcam"],
                 type="numpy",
-                label="Live Camera Feed",
+                label="Camera Feed",
                 streaming=True,
-                height=300
+                height=400,
+                webcam_options=WebcamOptions(mirror=True)
             )
-            frame_output = gr.Image(label="Processed Frame / Detection Result", height=300)
-            vision_status = gr.Textbox(label="Vision Status",
-                                       value="Camera ready. Capture or upload a frame to process.", interactive=False)
 
+            frame_output = gr.Image(label="Detection Result (5 FPS)", height=400)
+            vision_status = gr.Markdown(value="*Camera ready. Add items to your list above.*")
+
+        # --- Events ---
         add_outputs = [cart_state, item_input, cart_display, remove_dropdown]
         add_btn.click(fn=add_item, inputs=[item_input, cart_state], outputs=add_outputs)
         item_input.submit(fn=add_item, inputs=[item_input, cart_state], outputs=add_outputs)
@@ -62,6 +69,18 @@ with gr.Blocks(title="Sim-Shopping") as demo:
 
         clear_outputs = [cart_state, cart_display, remove_dropdown]
         clear_btn.click(fn=clear_cart, inputs=[cart_state], outputs=clear_outputs)
+
+        # Live detection (streaming)
+        camera_feed.stream(
+            fn=process_frame,
+            inputs=[camera_feed, cart_state],
+            outputs=[frame_output, vision_status, cart_state],
+            time_limit=None,  # Run indefinitely
+            stream_every=0.2  # Process every 0.2 seconds (5 FPS)
+        )
+
+
+
 
 if __name__ == "__main__":
     print('http://localhost:7860')

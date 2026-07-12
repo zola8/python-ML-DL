@@ -6,6 +6,15 @@ def add_item(item: str, cart: list):
         return cart, "", gr.update(value=format_cart(cart)), gr.update(choices=cart, value=None)
 
     new_item = item.strip()
+
+    if new_item in cart:
+        return (
+            cart,
+            new_item,  # Return the item back to the input field as visual feedback
+            gr.update(value=f"**️ '{new_item}' is already in the cart!**\n\n{format_cart(cart)}"),
+            gr.update(choices=cart, value=None)
+        )
+
     new_cart = cart + [new_item]
 
     # Return new state, clear input, update markdown, update dropdown choices
